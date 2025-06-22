@@ -1,18 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const[activeLink , setActiveLink] = useState('/');
+  const location = useLocation();
+
+  useEffect(() =>{
+    setActiveLink(location.pathname || '/');
+  },[location.pathname]);
+
+    const handleLinkClick = (path) => {
+setActiveLink(path);
+  }
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-  };
+  }
+
+
 
   return (
-    <nav className="bg-green-800  text-white py-4 md:py-6 relative border-b-2 border-amber-700 ">
+    <nav className="bg-green-800  text-white py-4 md:py-6 sticky top-0 z-10 border-b-2 border-amber-700 ">
       <div className="container mx-auto flex justify-between items-center">
         <h3 className="text-xl font-bold"> React Practice </h3>
 
@@ -24,11 +36,45 @@ const Navbar = () => {
         </div>
 
         <ul className="hidden md:flex space-x-4 md:space-x-6 ">
-          <li> <Link to={'/'} className="hover:text-green-500"> Home </Link>  </li>
-          <li> <Link to={'products'} className="hover:text-green-500"> Products </Link> </li>
-          <li> <Link to={'blogs'} className="hover:text-green-500"> Blogs </Link> </li>
-          <li> <Link to={'contact'} className="hover:text-green-500"> Contact </Link> </li>
-          <li> <Link to={'about'} className="hover:text-green-500"> About </Link> </li>
+          <li> <Link
+           to={'/'}
+           onClick={()=> handleLinkClick('/')}
+            className={`${activeLink === '/' ? 'text-red-500' : 'hover:text-green-500' }`}
+            > Home 
+            </Link>  
+          </li>
+
+          <li> 
+            <Link 
+            to={'/products'}
+            onClick={() => handleLinkClick('/products')} 
+            className={`${activeLink === '/products' ? 'text-red-500' : 'hover:text-green-500'}`}
+            > Products </Link> 
+            </li>
+
+          <li> 
+            <Link 
+            to={'/blogs'}
+            onClick={() => handleLinkClick('/blogs')}  
+            className={`${activeLink === '/blogs' ? 'text-red-500' : 'hover:text-green-500'}`}
+            > Blogs </Link> 
+            </li>
+
+          <li> 
+            <Link 
+            to={'/contact'}
+            onClick={() => handleLinkClick('/contact')}  
+            className={`${activeLink === '/contact' ? 'text-red-500' : 'hover:text-green-500'}`}
+            > Contact </Link> 
+            </li>
+
+          <li> 
+            <Link 
+            to={'/about'}
+            onClick={() => handleLinkClick('/about')}  
+            className={`${activeLink === '/about' ? 'text-red-500' : 'hover:text-green-500'}`}
+            > About </Link> 
+            </li>
         </ul>
 
         <button className="hidden md:block bg-white text-black px-4 py-1 rounded cursor-pointer hover:bg-slate-400">Log In</button>
