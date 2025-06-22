@@ -77,7 +77,11 @@ setActiveLink(path);
             </li>
         </ul>
 
+
+        <Link to={'/login'}>
         <button className="hidden md:block bg-white text-black px-4 py-1 rounded cursor-pointer hover:bg-slate-400">Log In</button>
+        </Link>
+        
 
         {/* Mobile menu collaps */}
         <div className={`md:hidden w-full absolute bg-green-600 top-full left-0 ${isOpen ?
